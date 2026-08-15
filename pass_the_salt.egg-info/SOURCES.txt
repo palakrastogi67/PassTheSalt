@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+pass_the_salt/_init_.py
+pass_the_salt/cli.py
+pass_the_salt/crypto.py
+pass_the_salt/utils.py
+pass_the_salt/vault.py
+pass_the_salt.egg-info/PKG-INFO
+pass_the_salt.egg-info/SOURCES.txt
+pass_the_salt.egg-info/dependency_links.txt
+pass_the_salt.egg-info/top_level.txt
+tests/test_crypto.py
+tests/test_vault.py
