@@ -34,7 +34,30 @@ class Vault:
     plaintext=crypto.decrypt(blob,key)
     entries=json.loads(plaintext.decode("utf-8"))
     return cls(path,key,entries)
-  
+  def add_entry(self,service,username,password,notes=""):
+    entry_id= service.lower()
+    self.entries[entry_id]={
+      "service":service,
+      "username": username,
+      "password":password,
+      "notes":notes,
+    }
+    self.save()
+  def save(self):
+    raw=self.path.read_bytes()
+    salt=raw[4:4+ crypto.SALT_SIZE]
+    self._write(salt)
+
+  def search(self,query):
+    results={}
+    for entry_id in self.entries:
+      entry=self.entries[entry_id]
+      if query.lower() in entry_id or query.lower() in entry["username"].lower():
+        results[entry_id]=entry
+      return results
+  def delete_entry(self, entry_id):
+    del self.entries[entry_id]
+    self.save()
 
 
 v= Vault("myfile.txt", b"somekey", {})
@@ -55,5 +78,12 @@ try:
 except Exception as e:
   print("Error:",e)
 
- 
+v4=Vault.unlock("test_vault.pts","mymasterpassword")
+v4.add_entry("Gmail", "me@gmail.com", "mypassword123")
+print("After adding:", v4.entries)
+results=v4.search("gmail")
+print("Search results:", results)
+
+v4.delete_entry("gmail")
+print("After delete:", v4.entries)
 
