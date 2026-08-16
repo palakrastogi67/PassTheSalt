@@ -18,13 +18,13 @@ else:
   if score<2:
     confirm=input("This is a weak password. Continue anyway? (y/n):")
     if confirm !="y":
-        exit()
+      exit()
 
   v=vault_mod.Vault.create(DEFAULT_VAULT_PATH,master_password)
   print("New Vault created.")
 
 while True:
-  command=input("\nCommand (add/search/delete/list/exit):")
+  command=input("\nCommand (add/search/delete/list/exit/edit):")
 
   if command=="exit":
       print ("Goodbye!")
@@ -51,23 +51,23 @@ while True:
     entry_id=input("Entry ID to delete:")
     v.delete_entry(entry_id)
     print("Entry deleted.")
+  
   elif command=="edit":
-    entry_id=("Enter ID to edit:")
+    entry_id=input("Enter ID to edit:")
     if entry_id not in v.entries:
       print("Entry not found.")
     else:
       new_username= input("New username (leave blank to keep same):")
       new_password= input("New password (leave blank to keep same):")
       if new_username!="":
-        v.entries[entry_id]["Username"]= new_username
+        v.entries[entry_id]["username"]= new_username
       if new_password!= "":
-        v.entries[entry_id]["Password"]=new_password
+        v.entries[entry_id]["password"]=new_password
       v.save()
       print("Entry updated.")
 
-
   elif command=="list":
-    print("All entries:", v.entries)
+       print("All entries:", v.entries)
 
   else:
     print("Unknown command. Try: add/search/delete/list/exit")

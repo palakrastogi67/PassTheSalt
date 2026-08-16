@@ -20,5 +20,11 @@ def password_strength(password):
     score=score+1
   if any(c.isupper() for c in password):
       score=score+1
-  return score
+  if score<=1:
+    label=" Weak"
+  elif score<=3:
+    label="Medium"
+  else: 
+    label="Strong"
+  return label,score
 print(password_strength("hello123"))
